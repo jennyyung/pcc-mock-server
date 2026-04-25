@@ -1,0 +1,21 @@
+{
+    "task": [
+        {
+            "taskType": 10,
+            "taskId": "1324",
+            "taskUrl": "http://10.248.123.196:9099/mpis-intercut/api/play/schedules/taskId?taskId=1324",
+            "updatedTime": "2026-04-16 14:49:34",
+            "deviceList": [
+                "S00000001040"
+            ]
+        },{
+            "taskType": 10,
+            "taskId": "1323",
+            "taskUrl": "http://10.248.123.196:9099/mpis-intercut/api/play/schedules/taskId?taskId=1323",
+            "updatedTime": "2026-04-16 14:49:34",
+            "deviceList": [
+                "S00000001042"
+            ]
+        }
+    ]
+}

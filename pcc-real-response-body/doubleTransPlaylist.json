@@ -1,0 +1,21 @@
+{
+    "taskId": "1324"
+    "id": 97,
+    "name": "济阳站台两列车播表95",
+    "updatedTime": null,
+    "startTime": "2026-04-14 00:00:00",
+    "endTime": "2026-04-30 23:59:00",
+    "weekFlag": null,
+    "resolution": "1920,1080",
+    "level": 3,
+    "layouts": [
+        {
+            "id": 266,
+            "name": "济阳两列车站台版式266",
+            "updatedTime": "2026-04-14 14:45:57",
+            "startTime": "08:00:00",
+            "endTime": "00:00:00",
+            "weekFlag": null
+        }
+    ]
+}

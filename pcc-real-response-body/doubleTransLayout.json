@@ -1,0 +1,966 @@
+{
+    "id": 266,
+    "name": "济阳两列车站台版式",
+    "updatedTime": "2026-04-14 14:45:57",
+    "resolution": "1920,1080",
+    "backImage": "http://172.25.10.146:9001/pids-fastdfs/fastdfs/preview-fastDFS?groupName=group1&filePath=M00/00/15/rBkKkmnYcEKEXQz0AAAAACIzi5A007.jpg",
+    "md5": "7155f0099ee56155c9e0a983cb05bee3",
+    "backColor": "",
+    "showType": 0,
+    "partitions": [
+        {
+            "id": 901,
+            "mediaType": 9,
+            "rect": "878,8,678,184",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "stationCh": {
+                    "rect": "10,10,130,30",
+                    "tipCh": null,
+                    "font": {
+                        "name": "微软雅黑",
+                        "size": 12,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": null,
+                        "align": 1,
+                        "effect": 0
+                    },
+                    "content": {
+                        "rect": "9,20,669,130",
+                        "text": "市民中心",
+                        "font": {
+                            "name": "黑体",
+                            "size": 72,
+                            "bold": true,
+                            "italic": true,
+                            "textColor": "#000000",
+                            "align": 2,
+                            "effect": 0
+                        }
+                    }
+                },
+                "stationEn": {
+                    "rect": "10,50,130,30",
+                    "tip": null,
+                    "font": {
+                        "name": "微软雅黑",
+                        "size": 12,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": null,
+                        "align": 1,
+                        "effect": 0
+                    },
+                    "content": {
+                        "rect": "140,50,130,30",
+                        "text": null,
+                        "font": {
+                            "name": "微软雅黑",
+                            "size": 12,
+                            "bold": false,
+                            "italic": false,
+                            "textColor": null,
+                            "align": 1,
+                            "effect": 0
+                        }
+                    }
+                }
+            },
+            "zOrder": 3
+        },
+        {
+            "id": 501,
+            "mediaType": 5,
+            "rect": "1572,14,330,80",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "time": {
+                    "format": "hh:mm:ss",
+                    "font": {
+                        "name": "黑体",
+                        "size": 72,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": "#000000E0",
+                        "align": 2,
+                        "effect": 0
+                    }
+                },
+                "timeImage": null,
+                "md5": null
+            },
+            "zOrder": 3
+        },
+        {
+            "id": 401,
+            "mediaType": 4,
+            "rect": "1578,101,320,93",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "date": {
+                    "formatCh": "yyyy年mm月dd日",
+                    "fontCh": {
+                        "name": "黑体",
+                        "size": 40,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": "#000000",
+                        "align": 2,
+                        "effect": 0
+                    },
+                    "rectCh": "3,11,314,70",
+                    "rectEn": "70,50,120,30",
+                    "formatEn": "yyyy-mm-dd",
+                    "fontEn": {
+                        "name": "微软雅黑",
+                        "size": 12,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": null,
+                        "align": 1,
+                        "effect": 0
+                    }
+                },
+                "week": {
+                    "formatCh": "EE",
+                    "fontCh": {
+                        "name": "微软雅黑",
+                        "size": 12,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": null,
+                        "align": 1,
+                        "effect": 0
+                    },
+                    "formatEn": null,
+                    "fontEn": {
+                        "name": "微软雅黑",
+                        "size": 12,
+                        "bold": false,
+                        "italic": false,
+                        "textColor": null,
+                        "align": 1,
+                        "effect": 0
+                    },
+                    "rectCh": "130,10,80,30",
+                    "rectEn": "130,50,80,30"
+                }
+            },
+            "zOrder": 3
+        },
+        {
+            "id": 101,
+            "mediaType": 1,
+            "rect": "584,200,1329,752",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "video": {
+                    "liveChannel": "rtsp://admin:jdkjy8888@172.16.11.102:554/cam/realmonitor?channel=1&subtype=0",
+                    "liveChannelName": "直播源1",
+                    "media": [
+                        {
+                            "fileName": "http://10.248.123.196:8096/mpis-resources/2025-vedio/faae3e8c078eed71ced043e440aeb80d.MP4",
+                            "md5": "faae3e8c078eed71ced043e440aeb80d"
+                        }
+                    ]
+                },
+                "volume": "20,20",
+                "play": "0",
+                "isProgram": 0
+            },
+            "zOrder": 2
+        },
+        {
+            "id": 301,
+            "mediaType": 3,
+            "rect": "276,960,1632,96",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "text": {
+                    "contentCh": [
+                        "欢迎乘坐济南轨道交通济阳线！"
+                    ],
+                    "fontCh": {
+                        "name": "黑体",
+                        "size": 72,
+                        "bold": true,
+                        "italic": null,
+                        "textColor": "#FFFFFF",
+                        "align": 2,
+                        "effect": 0
+                    },
+                    "fontEn": null,
+                    "contentEn": null,
+                    "rectCh": null,
+                    "rectEn": null
+                },
+                "speed": 60,
+                "textdirection": 0,
+                "isEmer": 0,
+                "isProgram": null
+            },
+            "zOrder": 1
+        },
+        {
+            "id": 601,
+            "mediaType": 6,
+            "rect": "11,12,563,938",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "atsType": 0,
+                "ats": {
+                    "train1": {
+                        "destCh": {
+                            "rect": "10,10,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "121,338,304,92",
+                                "text": "崔寨",
+                                "font": {
+                                    "name": "黑体",
+                                    "size": 64,
+                                    "bold": true,
+                                    "italic": false,
+                                    "textColor": "#000000",
+                                    "align": 2,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "destEn": {
+                            "rect": "10,50,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "150,50,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "nextCh": {
+                            "rect": "10,290,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "150,210,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "nextEn": {
+                            "rect": "150,250,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "10,250,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "skipCh": {
+                            "rect": "10,450,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "150,370,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "skipEn": {
+                            "rect": "150,400,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "10,400,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "trainTipCh": {
+                            "rect": "10,90,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "trainTipContent": {
+                                "status": {
+                                    "rect": "46,139,471,113",
+                                    "text": "即将进站",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 72,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "time": {
+                                    "rect": "137,108,197,201",
+                                    "text": "  ",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 150,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "min": {
+                                    "rect": "373,252,105,57",
+                                    "text": "  ",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 36,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "group": {
+                                    "rect": "10,370,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "trainType": {
+                                    "rect": "150,290,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                }
+                            }
+                        },
+                        "trainTipEn": {
+                            "rect": "10,130,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "trainTipContent": {
+                                "status": {
+                                    "rect": "10,210,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "time": {
+                                    "rect": "137,108,197,201",
+                                    "text": "  ",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 150,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "min": {
+                                    "rect": "150,130,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "group": {
+                                    "rect": "150,320,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "trainType": {
+                                    "rect": "10,320,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "train2": {
+                        "destCh": {
+                            "rect": "260,10,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "125,819,313,93",
+                                "text": "崔寨",
+                                "font": {
+                                    "name": "黑体",
+                                    "size": 64,
+                                    "bold": true,
+                                    "italic": false,
+                                    "textColor": "#000000",
+                                    "align": 2,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "destEn": {
+                            "rect": "260,50,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "400,50,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "nextCh": {
+                            "rect": "260,290,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "400,210,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "nextEn": {
+                            "rect": "400,250,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "260,250,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "skipCh": {
+                            "rect": "260,450,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "400,370,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "skipEn": {
+                            "rect": "400,400,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "content": {
+                                "rect": "260,400,130,30",
+                                "text": "",
+                                "font": {
+                                    "name": "微软雅黑",
+                                    "size": 12,
+                                    "bold": false,
+                                    "italic": false,
+                                    "textColor": null,
+                                    "align": 1,
+                                    "effect": 0
+                                }
+                            }
+                        },
+                        "trainTipCh": {
+                            "rect": "260,90,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "trainTipContent": {
+                                "status": {
+                                    "rect": "34,631,483,119",
+                                    "text": " ",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 72,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "time": {
+                                    "rect": "137,582,221,217",
+                                    "text": "7",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 150,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "min": {
+                                    "rect": "384,737,83,56",
+                                    "text": "分钟",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 36,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "group": {
+                                    "rect": "260,370,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "trainType": {
+                                    "rect": "400,290,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                }
+                            }
+                        },
+                        "trainTipEn": {
+                            "rect": "260,130,130,30",
+                            "tip": "",
+                            "font": {
+                                "name": "微软雅黑",
+                                "size": 12,
+                                "bold": false,
+                                "italic": false,
+                                "textColor": null,
+                                "align": 1,
+                                "effect": 0
+                            },
+                            "trainTipContent": {
+                                "status": {
+                                    "rect": "260,210,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "time": {
+                                    "rect": "137,582,221,217",
+                                    "text": "7",
+                                    "font": {
+                                        "name": "黑体",
+                                        "size": 150,
+                                        "bold": true,
+                                        "italic": false,
+                                        "textColor": "#000000",
+                                        "align": 2,
+                                        "effect": 0
+                                    }
+                                },
+                                "min": {
+                                    "rect": "400,130,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "group": {
+                                    "rect": "400,320,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                },
+                                "trainType": {
+                                    "rect": "260,320,130,30",
+                                    "text": "",
+                                    "font": {
+                                        "name": "微软雅黑",
+                                        "size": 12,
+                                        "bold": false,
+                                        "italic": false,
+                                        "textColor": null,
+                                        "align": 1,
+                                        "effect": 0
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "train3": {
+                        "destCh": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "content": null
+                        },
+                        "destEn": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "content": null
+                        },
+                        "nextCh": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "content": null
+                        },
+                        "nextEn": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "content": null
+                        },
+                        "skipCh": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "content": null
+                        },
+                        "skipEn": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "content": null
+                        },
+                        "trainTipCh": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "trainTipContent": null
+                        },
+                        "trainTipEn": {
+                            "rect": null,
+                            "tip": null,
+                            "font": null,
+                            "trainTipContent": null
+                        }
+                    }
+                }
+            },
+            "zOrder": 3
+        },
+        {
+            "id": 302,
+            "mediaType": 3,
+            "rect": "254,958,1658,98",
+            "backImage": null,
+            "md5": null,
+            "backColor": null,
+            "params": {
+                "text": {
+                    "contentCh": null,
+                    "fontCh": {
+                        "name": "黑体",
+                        "size": 72,
+                        "bold": null,
+                        "italic": null,
+                        "textColor": "#F44336",
+                        "align": 0,
+                        "effect": 0
+                    },
+                    "fontEn": null,
+                    "contentEn": null,
+                    "rectCh": null,
+                    "rectEn": null
+                },
+                "speed": 70,
+                "textdirection": null,
+                "isEmer": 1,
+                "isProgram": 0
+            },
+            "zOrder": 1
+        }
+    ],
+    "emer": {
+        "fullScreen": {
+            "backImage": null,
+            "md5": null,
+            "backColor": "#F44336",
+            "font": {
+                "name": "黑体",
+                "size": 72,
+                "bold": null,
+                "italic": null,
+                "textColor": "#FFEB3BF2",
+                "align": 0,
+                "effect": 0
+            }
+        },
+        "speed": 20,
+        "showType": 3
+    },
+    "chEnSwitch": "5"
+}
