@@ -41,6 +41,42 @@ CONFIG = {
 }
 
 # ========================
+# Mock动态配置 (方案A)
+# ========================
+MOCK_CONFIG = {
+    # 任务数量配置: {metro_id: count}
+    'task_count': {},
+
+    # HTTP错误码配置: {endpoint: status_code}
+    # endpoint: 'task', 'schedule', 'layout'
+    'http_error': {},
+}
+
+def reset_mock_config():
+    """重置所有Mock配置为默认值"""
+    MOCK_CONFIG['task_count'].clear()
+    MOCK_CONFIG['http_error'].clear()
+    if CONFIG['log_enabled']:
+        print("[MOCK] 配置已重置为默认值")
+
+def check_http_error(endpoint):
+    """检查是否需要返回HTTP错误"""
+    log(f"🔍 [调试] 检查HTTP错误: endpoint={endpoint}, 当前配置={MOCK_CONFIG['http_error']}")
+    code = MOCK_CONFIG['http_error'].get(endpoint)
+    log(f"🔍 [调试] 获取到的code={code}, 类型={type(code)}")
+    if code == 400:
+        log(f"🔍 [调试] 匹配到400错误")
+        return jsonify({'error': 'INVALID REQUEST'}), 400
+    elif code == 404:
+        log(f"🔍 [调试] 匹配到404错误")
+        return jsonify({'error': 'NOT FOUND'}), 404
+    elif code == 500:
+        log(f"🔍 [调试] 匹配到500错误")
+        return jsonify({'error': 'INTERNAL SERVER ERROR'}), 500
+    log(f"🔍 [调试] 未匹配到任何错误，返回None")
+    return None
+
+# ========================
 # 序号管理器 - 保证全局序号单调递增
 # ========================
 class SequenceManager:
@@ -211,8 +247,10 @@ def generate_layout(params=None):
     # 生成不同类型版式的partitions
     if layout_type == 'single':
         partitions = generate_single_trans_partitions()
-    else:
+    elif layout_type == 'double':
         partitions = generate_double_trans_partitions()
+    elif layout_type == 'right_ats':  # 新增右置ATS版式
+        partitions = generate_right_ats_partitions()
 
     return {
         "id": int(layout_id),
@@ -220,8 +258,8 @@ def generate_layout(params=None):
         "updatedTime": params.get('updatedTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
         "resolution": params.get('resolution', '1920,1080'),
         # 底图，确保能访问，以及md5正确
-        "backImage": params.get('backImage', 'http://172.25.10.146:9001/pids-fastdfs/fastdfs/preview-fastDFS?groupName=group1&filePath=M00/00/15/rBkKkmnYcC2EZHIZAAAAAD0IOYU436.png'),
-        "md5": params.get('md5', 'cbc7216def3d235ea7e382dabda39609'),
+        "backImage": params.get('backImage', 'http://172.35.120.163:18080/double2.png'),
+        "md5": params.get('md5', '8887216def3d235ea7e382dabda39609'),
         "backColor": params.get('backColor', ''),
         "showType": params.get('showType', 0),
         "partitions": params.get('partitions', partitions),
@@ -256,19 +294,27 @@ def generate_schedule(params=None):
     # 生成关联的版式
     layouts = params.get('layouts', [
         {
-            "id": 1000,
-            "name": "默认版式",
+            "id": 1002,
+            "name": "日常版式",
             "updatedTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "startTime": "00:00:00",
-            "endTime": "00:00:00",
+            "endTime": "05:00:00",
             "weekFlag": ""
         },
         {
-            "id": 1001,
-            "name": "上午版式",
+            "id": 1003,
+            "name": "早高峰版式",
             "updatedTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "startTime": "07:00:00",
-            "endTime": "12:00:00",
+            "endTime": "10:00:00",
+            "weekFlag": "1,2,3,4,5,6,7"
+        },
+        {
+            "id": 1008,
+            "name": "双列车版式",
+            "updatedTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "startTime": "16:10:00",
+            "endTime": "15:20:00",
             "weekFlag": "1,2,3,4,5,6,7"
         }
     ])
@@ -326,6 +372,33 @@ def generate_control(cmd_type, device_list=None, params=None):
         "deviceList": device_list
     }
 
+def generate_image_partition(image_url, x, y, width, height, partition_id=201, duration=10):
+    """生成图片分区
+    Args:
+        image_url: 图片地址
+        x,y: 左上角坐标
+        width,height: 尺寸
+        partition_id: 分区ID(建议2xx系列)
+        duration: 显示时长(秒)，用于轮播
+    """
+    return {
+        "id": partition_id,
+        "mediaType": 2,                    # 2 = 图片类型
+        "rect": f"{x},{y},{width},{height}",
+        "backImage": None,
+        "md5": None,
+        "backColor": None,
+        "params": {
+            "image": {
+                "fileName": image_url,
+                "md5": hashlib.md5(image_url.encode()).hexdigest(),
+                "fitMode": 1,              # 1=等比缩放适配, 2=拉伸, 3=裁剪
+                "duration": duration       # 每张显示时长
+            }
+        },
+        "zOrder": 2
+    }
+
 def generate_single_trans_partitions():
     """生成单列车版式的partitions"""
     return [
@@ -333,8 +406,8 @@ def generate_single_trans_partitions():
             "id": 901,
             "mediaType": 9,
             "rect": "878,8,678,184",
-            "backImage": "",
-            "md5": "",
+            "backImage": "http://10.210.31.10:30090/mxap-file/9000/mxap-iap/algorithm-banner/7c374784-94f5-49d6-b1b9-5da095113884.png",
+            "md5": "aaa7216def3d235ea7e382dabda39609",
             "backColor": None,
             "params": {
                 "stationCh": {
@@ -426,13 +499,13 @@ def generate_single_trans_partitions():
             "backColor": None,
             "params": {
                 "date": {
-                    "formatCh": "yyyy年mm月dd日",
+                    "formatCh": "yyyy年年mm月dd日",
                     "fontCh": {
-                        "name": "黑体",
-                        "size": 40,
+                        "name": "宋体",
+                        "size": 20,
                         "bold": False,
                         "italic": False,
-                        "textColor": "#000000",
+                        "textColor": "#00000F",
                         "align": 2,
                         "effect": 0
                     },
@@ -453,10 +526,10 @@ def generate_single_trans_partitions():
                     "formatCh": "EE",
                     "fontCh": {
                         "name": "微软雅黑",
-                        "size": 12,
+                        "size": 18,
                         "bold": False,
                         "italic": False,
-                        "textColor": "#000000",
+                        "textColor": "#00000F",
                         "align": 1,
                         "effect": 0
                     },
@@ -470,7 +543,7 @@ def generate_single_trans_partitions():
                         "align": 1,
                         "effect": 0
                     },
-                    "rectCh": "130,10,80,30",
+                    "rectCh": "150,10,80,30",
                     "rectEn": "130,50,80,30"
                 }
             },
@@ -489,8 +562,12 @@ def generate_single_trans_partitions():
                     "liveChannelName": "",
                     "media": [
                         {
-                            "fileName": "http://172.25.10.146:9001/pids-fastdfs/fastdfs/preview-fastDFS?groupName=group1&filePath=M00/00/12/rBkKkmklE5KEBsYjAAAAALzr668881.mp4",
-                            "md5": "3a11c9a7f10dbe4573c07afcd796566c"
+                            "fileName": "http://172.35.120.163:18080/beach.mp4",
+                            "md5": "ggg7216def3d235ea7e382dabda39609",
+                        },
+                        {
+                            "fileName": "http://172.35.120.163:18080/flowers.mp4",
+                            "md5": "hhhh7216def3d235ea7e382dabda39609",
                         }
                     ]
                 },
@@ -510,26 +587,26 @@ def generate_single_trans_partitions():
             "params": {
                 "text": {
                     "contentCh": [
-                        "欢迎乘坐济南轨道交通济阳线！"
+                        "欢迎乘坐济南轨道交通济阳线！啦啦啦！"
                     ],
                     "fontCh": {
-                        "name": "黑体",
-                        "size": 72,
+                        "name": "宋体",
+                        "size": 32,
                         "bold": True,
                         "italic": None,
-                        "textColor": "#FFFFFF",
+                        "textColor": "#FFFFF0",
                         "align": 2,
                         "effect": 0
                     },
-                    "fontEn": None,
-                    "contentEn": None,
-                    "rectCh": None,
-                    "rectEn": None
+                    "fontEn": "Arial",
+                    "contentEn": "Welcome to jiyang metro line!",
+                    "rectCh": "济阳站",
+                    "rectEn": "jiyang"
                 },
-                "speed": 60,
-                "textdirection": 0,
-                "isEmer": 0,
-                "isProgram": None
+                "speed": 20,
+                "textdirection": 1,
+                "isEmer": 1,
+                "isProgram": 1
             },
             "zOrder": 1
         },
@@ -592,6 +669,121 @@ def generate_double_trans_partitions():
             p["params"]["ats"]["train1"] = generate_train_data("崔寨", "即将进站", "")
             p["params"]["ats"]["train2"] = generate_train_data("崔寨", " ", "7")
     return partitions
+
+def generate_right_ats_partitions():
+    """生成ATS在右侧悬浮的版式
+    特点：ATS在右侧，zOrder=10置顶，覆盖所有播放元素
+    """
+    partitions = []
+    
+    # 1. 主视频区域（拉宽到全屏）
+    partitions.append({
+        "id": 101,
+        "mediaType": 1,
+        "rect": "0,200,1920,760",  # x=0, 从最左开始
+        "backImage": None,
+        "md5": None,
+        "backColor": None,
+        "params": {
+            "video": {
+                "liveChannel": "",
+                "liveChannelName": "",
+                "media": [{
+                    "fileName": "http://xxx.com/test.mp4",
+                    "md5": "abc123..."
+                }]
+            },
+            "volume": "20,20",
+            "play": "0",
+            "isProgram": 0
+        },
+        "zOrder": 2
+    })
+    
+    # 2. 站名（保持中间）
+    partitions.append({
+        "id": 901,
+        "mediaType": 9,
+        "rect": "878,8,678,184",
+        "backImage": "",
+        "md5": "",
+        "backColor": "",
+        "params": {
+            "stationCh": {
+                "rect": "10,10,130,30",
+                "tipCh": "",
+                "font": {"name": "微软雅黑", "size": 12},
+                "content": {
+                    "rect": "9,20,669,130",
+                    "text": "市民中心",
+                    "font": {"name": "黑体", "size": 72, "bold": True}
+                }
+            }
+        },
+        "zOrder": 3
+    })
+    
+    # 3. 时间 + 日期
+    partitions.append({
+        "id": 501,
+        "mediaType": 5,
+        "rect": "1572,14,330,80",
+        "params": {
+            "time": {"format": "hh:mm:ss", "font": {"name": "黑体", "size": 72}}
+        },
+        "zOrder": 3
+    })
+    
+    partitions.append({
+        "id": 401,
+        "mediaType": 4,
+        "rect": "1578,101,320,93",
+        "params": {
+            "date": {"formatCh": "yyyy年mm月dd日"},
+            "week": {"formatCh": "EE"}
+        },
+        "zOrder": 3
+    })
+    
+    # ✅ 4. 核心：ATS在右侧，zOrder=10 最高层级
+    partitions.append({
+        "id": 601,
+        "mediaType": 6,
+        "rect": "1340,11,563,938",  # x=1340 在右侧
+        "backImage": None,
+        "md5": None,
+        "backColor": "#00000080",    # 半透明黑色背景
+        "params": {
+            "atsType": 0,
+            "opacity": 0.8,           # 透明度 0-1
+            "ats": {
+                "train1": generate_train_data("济阳北", "即将进站", "3"),
+                "train2": generate_train_data("崔寨", " ", "7"),
+                "train3": generate_train_data("遥墙机场", " ", "12")
+            }
+        },
+        "zOrder": 10  # ✅ 最高层级，覆盖所有内容
+    })
+    
+    # 5. 底部走马灯
+    partitions.append({
+        "id": 301,
+        "mediaType": 3,
+        "rect": "0,960,1920,120",
+        "params": {
+            "text": {
+                "contentCh": ["欢迎乘坐济南轨道交通济阳线！"],
+                "font": {"name": "黑体", "size": 72, "bold": True, "textColor": "#FFFFFF"}
+            },
+            "speed": 60,
+            "textdirection": 0,
+            "isEmer": 0
+        },
+        "zOrder": 1
+    })
+    
+    return partitions
+
 
 def generate_train_data(dest, status, time_val):
     """生成列车数据"""
@@ -962,7 +1154,7 @@ def create_schedule_task():
         'id': schedule_id,
         'name': name,
         'startTime': datetime.datetime.now().strftime("%Y-%m-%d 08:00:00"),
-        'endTime': (datetime.datetime.now() + datetime.timedelta(days=30)).strftime("%Y-%m-%d 20:00:00"),
+        'endTime': (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d 20:00:00"),
         'weekFlag': '1,2,3,4,5,6,7',
         'level': 0
     })
@@ -1186,50 +1378,72 @@ def get_task_list():
     返回:
       - taskType: 1=紧急信息发布, 3=紧急信息撤销, 10=播放计划, 51=设备控制
     """
+    # 检查是否需要返回HTTP错误
+    error_resp = check_http_error('task')
+    if error_resp is not None:
+        log(f"⚠️  [配置] 任务列表接口强制返回HTTP {error_resp[1]}")
+        return error_resp
+
     metro_id = request.args.get('metro', CONFIG['default_metro'])
 
     if not metro_id:
         return jsonify({"error": "缺少必填参数: metro"}), 400
 
+    # 检查任务数量配置
+    task_count_cfg = MOCK_CONFIG['task_count'].get(metro_id)
+    if task_count_cfg == 0:
+        # 配置返回空任务列表
+        log(f"⚠️  [配置] 线路 {metro_id} 返回空任务列表")
+        return jsonify({"task": []}), 200
+
     # 收集该线路的所有任务
     task_list = []
 
-    # 添加播放计划任务
+    # 添加播放计划任务（按metroId过滤）
     for task_id, schedule in data_store.schedules.items():
-        task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/play/schedules/taskId?taskId={task_id}"
-        task_list.append({
-            "taskType": 10,
-            "taskId": str(task_id),
-            "taskUrl": task_url,
-            "updatedTime": schedule.get('updatedTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-            "deviceList": data_store.tasks.get(task_id, {}).get('deviceList', [])
-        })
+        task = data_store.tasks.get(task_id, {})
+        # 只返回匹配线路的任务
+        if task.get('metroId') == metro_id:
+            task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/play/schedules/taskId?taskId={task_id}"
+            task_list.append({
+                "taskType": 10,
+                "taskId": str(task_id),
+                "taskUrl": task_url,
+                "updatedTime": schedule.get('updatedTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                "deviceList": task.get('deviceList', [])
+            })
 
-    # 添加紧急信息发布任务
+    # 添加紧急信息发布任务（按metroId过滤）
     for task_id, emer in data_store.emergencies.items():
-        task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/operate/emer/taskId?taskId={task_id}"
-        task_list.append({
-            "taskType": 1,
-            "taskId": str(task_id),
-            "taskUrl": task_url,
-            "updatedTime": emer.get('createTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-            "deviceList": data_store.tasks.get(task_id, {}).get('deviceList', [])
-        })
+        task = data_store.tasks.get(task_id, {})
+        # 只返回匹配线路的任务
+        if task.get('metroId') == metro_id:
+            task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/operate/emer/taskId?taskId={task_id}"
+            task_list.append({
+                "taskType": 1,
+                "taskId": str(task_id),
+                "taskUrl": task_url,
+                "updatedTime": emer.get('createTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                "deviceList": task.get('deviceList', [])
+            })
 
-    # 添加设备控制任务
+    # 添加设备控制任务（按metroId过滤）
     for task_id, ctrl in data_store.controls.items():
-        task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/ctrl/devicectrl/taskId?taskId={task_id}"
-        task_list.append({
-            "taskType": 51,
-            "taskId": str(task_id),
-            "taskUrl": task_url,
-            "updatedTime": ctrl.get('createTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-            "deviceList": ctrl.get('deviceList', [])
-        })
+        task = data_store.tasks.get(task_id, {})
+        # 只返回匹配线路的任务
+        if task.get('metroId') == metro_id:
+            task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/ctrl/devicectrl/taskId?taskId={task_id}"
+            task_list.append({
+                "taskType": 51,
+                "taskId": str(task_id),
+                "taskUrl": task_url,
+                "updatedTime": ctrl.get('createTime', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                "deviceList": ctrl.get('deviceList', [])
+            })
 
-    # 添加撤销任务
+    # 添加撤销任务（按metroId过滤）
     for task_id, task in data_store.tasks.items():
-        if task.get('taskType') == '3':
+        if task.get('taskType') == '3' and task.get('metroId') == metro_id:
             task_url = f"http://*.*.*.*:{CONFIG['port']}/mpis-intercut/api/operate/emer/taskId?taskId={task_id}"
             task_list.append({
                 "taskType": 3,
@@ -1252,6 +1466,12 @@ def get_schedule():
     参数:
       - taskId: 播放计划ID
     """
+    # 检查是否需要返回HTTP错误
+    error_resp = check_http_error('schedule')
+    if error_resp is not None:
+        log(f"⚠️  [配置] 播放计划接口强制返回HTTP {error_resp[1]}")
+        return error_resp
+
     task_id = request.args.get('taskId')
 
     if not task_id:
@@ -1277,6 +1497,12 @@ def get_layout():
     参数:
       - layout: 版式ID
     """
+    # 检查是否需要返回HTTP错误
+    error_resp = check_http_error('layout')
+    if error_resp is not None:
+        log(f"⚠️  [配置] 版式接口强制返回HTTP {error_resp[1]}")
+        return error_resp
+
     layout_id = request.args.get('layout')
 
     if not layout_id:
@@ -1863,7 +2089,7 @@ def index():
             列车:{len(item['data'].get('atsInfo', []))}趟
         </div>"""
 
-    html += """</div>
+    html += f"""</div>
         </div>
 
         <div class="card">
@@ -1876,7 +2102,7 @@ def index():
             设备:{len(item['data'].get('deviceList', []))}个
         </div>"""
 
-    html += """</div>
+    html += f"""</div>
         </div>
 
         <div class="card">
@@ -1917,6 +2143,87 @@ def index():
     return html
 
 # ========================
+# 方案A - 动态配置接口
+# ========================
+
+@app.route('/mock/config/set-task-count', methods=['POST'])
+def set_task_count():
+    """
+    设置指定线路返回的任务数量
+    参数: {metro: "线路编号", count: 任务数量(0=空列表, 1=单任务, N=多任务)}
+    """
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "请求体为空或JSON格式错误"}), 400
+
+        metro_id = str(data.get('metro', CONFIG['default_metro']))
+        count = data.get('count')
+
+        if count is None:
+            return jsonify({"error": "缺少必填参数: count"}), 400
+
+        if not isinstance(count, int) or count < 0:
+            return jsonify({"error": "count必须是非负整数"}), 400
+
+        MOCK_CONFIG['task_count'][metro_id] = count
+        log(f"⚙️  [配置] 线路 {metro_id} 任务数量设置为 {count}")
+        return jsonify({"success": True, "message": f"线路 {metro_id} 任务数量已设置为 {count}"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/mock/config/set-http-error', methods=['POST'])
+def set_http_error():
+    """
+    设置指定接口强制返回的HTTP错误码
+    参数: {endpoint: "task|schedule|layout", code: 错误码(400|404|500)}
+    """
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "请求体为空或JSON格式错误"}), 400
+
+        endpoint = data.get('endpoint')
+        code = data.get('code')
+
+        if not endpoint or endpoint not in ['task', 'schedule', 'layout']:
+            return jsonify({"error": "endpoint必须是 task|schedule|layout 之一"}), 400
+
+        # 处理code参数：支持null/None/字符串"null"/字符串数字
+        log(f"🔍 [调试] 设置HTTP错误: endpoint={endpoint}, code={code}, code类型={type(code)}")
+        if code is None or (isinstance(code, str) and code.lower() == 'null'):
+            # 取消错误配置
+            MOCK_CONFIG['http_error'].pop(endpoint, None)
+            log(f"⚙️  [配置] {endpoint} 接口HTTP错误已取消，当前配置={MOCK_CONFIG['http_error']}")
+            return jsonify({"success": True, "message": f"{endpoint} 接口HTTP错误已取消"}), 200
+        else:
+            # 尝试转换为整数
+            try:
+                code_int = int(code)
+                if code_int not in [400, 404, 500]:
+                    return jsonify({"error": "code必须是 400|404|500 之一"}), 400
+                MOCK_CONFIG['http_error'][endpoint] = code_int
+                log(f"⚙️  [配置] {endpoint} 接口强制返回HTTP {code_int}，当前配置={MOCK_CONFIG['http_error']}")
+                return jsonify({"success": True, "message": f"{endpoint} 接口将强制返回HTTP {code_int}"}), 200
+            except (ValueError, TypeError):
+                return jsonify({"error": "code必须是 400|404|500 之一，或null取消错误"}), 400
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/mock/config/reset', methods=['POST'])
+def reset_config():
+    """
+    重置所有Mock配置为默认值
+    """
+    try:
+        reset_mock_config()
+        return jsonify({"success": True, "message": "所有Mock配置已重置为默认值"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# ========================
 # 启动入口
 # ========================
 
@@ -1943,6 +2250,10 @@ def print_routes():
     print("   GET  /delete_task           - 删除任务")
     print("   GET  /clear_all_tasks      - 清空所有任务")
     print("   GET  /reset_sequence        - 重置序号计数器")
+    print("\n📌 方案A - 动态配置接口:")
+    print("   POST /mock/config/set-task-count   - 设置任务数量(0=空列表,N=多任务)")
+    print("   POST /mock/config/set-http-error   - 强制返回HTTP错误(400|404|500)")
+    print("   POST /mock/config/reset            - 重置所有配置为默认值")
     print("\n📌 Web界面: http://localhost:5000/")
     print("="*60 + "\n")
 
